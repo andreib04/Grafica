@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+	public class MyGraphics
+	{
+		PictureBox display;
+		public Graphics grp;
+		Bitmap bmp;
+		Color backColor = Color.LightBlue;
+
+		public int resX { get { return display.Width; } }
+		public int resY { get { return display.Height; } }
+
+		public MyGraphics(PictureBox _display)
+		{
+			this.display = _display;
+			bmp = new Bitmap(display.Width, display.Height);
+			grp = Graphics.FromImage(bmp);
+		}
+
+		public void Clear()
+		{
+			grp.Clear(backColor);
+		}
+
+		public void Refresh()
+		{
+			display.Image = bmp;
+		}
+	}
+}
