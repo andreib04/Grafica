@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
 	public partial class Form1 : Form
 	{
 		MyGraphics myGraphics;
+		MyMath myMath;
 		Random rnd;
 		float a = 0, b = 0;
 		public Form1()
@@ -20,6 +21,7 @@ namespace WindowsFormsApp1
 			InitializeComponent();
 			myGraphics = new MyGraphics(pictureBox1);
 			rnd = new Random();
+			myMath = new MyMath();
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -79,7 +81,7 @@ namespace WindowsFormsApp1
 
 		private void DrawSierpinski(Graphics grp, PointF A, PointF B, PointF C)
 		{
-			if(PointDistance(A,B) > 1 && PointDistance(B, C) > 1 && PointDistance(C,A) > 1)
+			if(myMath.PointDistance(A,B) > 1 && myMath.PointDistance(B, C) > 1 && myMath.PointDistance(C,A) > 1)
 			{
 				float k1 = 1;
 				float k2 = 3;
@@ -96,16 +98,12 @@ namespace WindowsFormsApp1
 			
 		}
 
-		public float PointDistance(PointF A, PointF B)
-		{
-			return (float)Math.Sqrt((A.X - B.X) * (A.X - B.X) + (A.Y - B.Y) * (A.Y - B.Y));
-		}
 
 		private void RegularRec(Graphics grp, int n, PointF C, float r, float fi)
 		{
 			List<PointF> t = Pr(n, C, r, fi);
 
-			if (AreaPolygon(C, t) > 100)
+			if (myMath.AreaPolygon(C, t) > 100)
 			{
 				DrawPolygon(grp, t);
 
@@ -121,7 +119,7 @@ namespace WindowsFormsApp1
 		{
 			List<PointF> t = IregularPolygon(n, C, minR, maxR, fi);
 
-			if(AreaPolygon(C, t) > 10)
+			if(myMath.AreaPolygon(C, t) > 10)
 			{
 				DrawPolygon(grp, t);
 
@@ -132,27 +130,6 @@ namespace WindowsFormsApp1
 			}
 		} 
 
-		public float Determinant(PointF A, PointF B, PointF C)
-		{
-			return (A.X * B.Y + B.X * C.Y + A.Y * C.X - C.X * B.Y - A.Y * B.X - C.Y * A.X);
-		}
-
-		public float Area(PointF A, PointF B, PointF C)
-		{
-			return 0.5f * (float)Math.Abs(Determinant(A, B, C));
-		}
-
-		public float AreaPolygon(PointF C, List<PointF> points)
-		{
-			float sum = 0;
-
-			for(int i = 0; i < points.Count; i++)
-			{
-				sum += Area(C, points[i], points[(i + 1) % points.Count]);
-			}
-
-			return sum;
-		}
 
 		private List<PointF> Pr(int n, PointF C, float R, float fi)
 		{
