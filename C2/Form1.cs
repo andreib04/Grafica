@@ -36,22 +36,31 @@ namespace C2
 		//Matricea S (x 0 0)  P' = P * S reprezinta coordonatele punctului scalar
 		//			 (0 y 0)
 		//			 (0 0 1)
-		
+
+		Polygon polygon = new Polygon(@"../../polygon.txt");
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			Matrix T = new Matrix(@"../../fisier.txt");
 			Matrix A = new Matrix(@"../../fisier2.txt");
-			foreach(string s in (T).View())
+			foreach(string s in (T*A).View())
 			{
 				listBox1.Items.Add(s);
 			}
 
 			graphics = new MyGraphics(pictureBox1);
-			Polygon polygon = new Polygon(@"../../polygon.txt");
+			
+			
 			polygon.DrawP(graphics.grp);
 
 			graphics.Refresh();
 		}
 
+		private void button1_Click(object sender, EventArgs e)
+		{
+			polygon.Translatie((float)input1.Value, (float)input2.Value);
+			polygon.DrawP(graphics.grp);
+
+			graphics.Refresh();
+		}
 	}
 }
