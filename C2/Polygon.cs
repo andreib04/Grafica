@@ -10,7 +10,7 @@ namespace C2
 {
 	//TODO introducerea transformarilor R, T, S pe un MyPoint
 	//
-	internal class MyPoint
+	public class MyPoint
 	{
 		public float X, Y;
 
@@ -28,7 +28,12 @@ namespace C2
 	}
 	public class Polygon
 	{
-		MyPoint[] points;
+	    public MyPoint[] points;
+
+		public Polygon(int length)
+		{
+			points= new MyPoint[length];
+		}
 
 		public Polygon(string fileName)
 		{
@@ -63,6 +68,44 @@ namespace C2
 			{
 				p.Draw(handler);
 			}
+		}
+
+		public void Translatie(float x, float y)
+		{
+			for(int i = 0; i < points.Length; i++)
+			{
+				points[i].X += x;
+				points[i].Y += y;
+			}
+		}
+
+		public Polygon Rotation(float angle, Polygon polygon)
+		{
+			Matrix R = new Matrix(3, 3);
+			R.values[0, 0] = (float)Math.Cos(angle);
+			R.values[0, 1] = -(float)(Math.Sin(angle));
+			R.values[1,0] = (float)Math.Sin(angle);
+			R.values[1, 1] = (float)Math.Cos(angle);
+			R.values[2, 2] = 1;
+
+
+
+			Matrix toR = R * polygon.polygonToMatrix();
+
+			return toR.matrixToPolygon();
+		}
+
+		public Matrix polygonToMatrix()
+		{
+			Matrix toR = new Matrix(points.Length, 2);
+
+			for(int i = 0; i < points.Length; i++)
+			{
+				toR.values[0, 1] = (int)points[i].X;
+				toR.values[1, i] = (int)points[i].Y;
+			}
+
+			return toR;
 		}
 
 	}

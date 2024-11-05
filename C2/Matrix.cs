@@ -9,7 +9,7 @@ namespace C2
 {
 	public class Matrix
 	{
-		float[,] values;
+		public float[,] values;
 		public int n { get { return values.GetLength(0); } }
 		public int m { get { return values.GetLength(1); } }
 
@@ -73,27 +73,41 @@ namespace C2
 			else
 			{
 				Matrix toR = new Matrix(A.n, B.m);
-
-				for(int i =0 ; i< A.n; i++)
+				for (int i = 0; i < A.n; i++)
 				{
-					for(int j = 0; j < B.m; j++)
+					for (int j = 0; j < B.m; j++)
 					{
 						toR.values[i, j] = 0;
-						for(int k = 0; k < A.m; k++)
-						{
-							toR.values[i,j] = A.values[i,k] * B.values[k,j];
-						}
+						for (int k = 0; k < A.m; k++)
+							toR.values[i, j] += A.values[i, k] * B.values[k, j];
 					}
 				}
-
 				return toR;
 			}
 
 		}
 
+		public Polygon matrixToPolygon()
+		{
+			Polygon toR = new Polygon(m);
+
+			for(int i = 0; i < m; i++)
+			{
+				toR.points[i].X = values[0, i];
+				toR.points[i].Y = values[1, i];
+			}
+
+			return toR;
+		}
+
 		public List<string> View()
 		{
 			List<string> toR = new List<string>();
+
+			if (values == null)
+			{
+				throw new Exception("Matrix values array is null.");
+			}
 
 			for (int i = 0; i < n; i++)
 			{
