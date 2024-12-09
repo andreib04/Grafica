@@ -79,21 +79,23 @@ namespace C2
 			}
 		}
 
-		public Polygon Rotation(float angle, Polygon polygon)
-		{
-			Matrix R = new Matrix(3, 3);
-			R.values[0, 0] = (float)Math.Cos(angle);
-			R.values[0, 1] = -(float)(Math.Sin(angle));
-			R.values[1,0] = (float)Math.Sin(angle);
-			R.values[1, 1] = (float)Math.Cos(angle);
-			R.values[2, 2] = 1;
+		//public Polygon Rotation(float angle, Polygon polygon)
+		//{
+			//Matrix R = new Matrix(3, 3);
+			//R.values[0, 0] = (float)Math.Cos(angle);
+			//R.values[0, 1] = -(float)(Math.Sin(angle));
+			//R.values[1,0] = (float)Math.Sin(angle);
+			//R.values[1, 1] = (float)Math.Cos(angle);
+			//R.values[2, 2] = 1;
 
 
 
-			Matrix toR = R * polygon.polygonToMatrix();
+			//Matrix toR = R * polygon.polygonToMatrix();
 
-			return toR.matrixToPolygon();
-		}
+			//return toR.matrixToPolygon();
+
+
+		//}
 
 		public Matrix polygonToMatrix()
 		{
