@@ -12,6 +12,7 @@ namespace Coloring
 		public PointF location;
 		public Color color;
 		public static Random random = new Random();
+		public int pound = 1;
 
 		public Palette(int maxX, int maxY)
 		{
